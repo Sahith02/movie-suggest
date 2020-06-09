@@ -8,8 +8,7 @@ loadedModel = pickle.load(open('moviePickleFile', 'rb'))
 
 @app.route('/')
 def home():
-    welcomeMessage = 'Hello and welcome to my movie recommendation API!'
-    return welcomeMessage
+    return render_template('home.html')
 
 @app.route('/get_10_movies', methods=['POST'])
 def predict_10_post():
