@@ -5,7 +5,7 @@ df = pd.read_csv('40k_movies_df')
 all_movies = list(df['Title'])
 
 #print(all_movies.count(np.nan))
-print(all_movies[23606].encode('utf8'))
+print(min(all_movies, key = len))
 
 #import json 
   
@@ -22,10 +22,10 @@ print(all_movies[23606].encode('utf8'))
 #    outfile.write(json_object) 
 
 
-with open('movieList1.txt', 'w+') as f:
+with open('movieList1.txt', 'w+', encoding='utf-8') as f:
     f.write("[")
     for item in all_movies:
-        f.write(str(item.encode('utf-8').decode() + ', '))
+        f.write(str('"' + item + '"' + ',\n'))
     f.write("]")
 
 print('Done!')
