@@ -2,13 +2,59 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+
 <style>
 * {
   box-sizing: border-box;
 }
 
+*:focus {
+  outline: none;
+}
+
+html, body{
+  /* height: 80%; */
+}
+
+html {
+  /* display: table; */
+  /* margin: auto; */
+  /* background-color: #121212; */
+  /* position: absolute; */
+}
+
 body {
-  font: 16px Arial;  
+  background-image: url("static/images/POSTER_movie_film_movies_posters_1920x1080.jpg");
+  font: 16px Arial;
+  width: 100%;
+  /* vertical-align: middle; */
+  text-align: center;
+}
+
+.layer {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+  /* background-color: #fff; */
+  max-width: 400px;
+  margin: auto;
+  margin-top: 240px;
+}
+
+h2 {
+  color: #fff;
+  width: 400px;
+  font-size: 200%;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 2px;
 }
 
 /*the container must be positioned relative:*/
@@ -19,14 +65,17 @@ body {
 
 input {
   border: 1px solid transparent;
-  background-color: #f1f1f1;
+  background-color: #333333;
   padding: 10px;
   font-size: 16px;
 }
 
 input[type=text] {
-  background-color: #f1f1f1;
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
   width: 100%;
+  /* border-color: red; */
 }
 
 input[type=submit] {
@@ -35,9 +84,19 @@ input[type=submit] {
   cursor: pointer;
 }
 
+button {
+  border: 1px solid transparent;
+  background-color: DodgerBlue;
+  padding: 10px 20px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: large;
+}
+
 .autocomplete-items {
   position: absolute;
-  border: 1px solid #d4d4d4;
+  border: 1px solid #444;
   border-bottom: none;
   border-top: none;
   z-index: 99;
@@ -50,36 +109,38 @@ input[type=submit] {
 .autocomplete-items div {
   padding: 10px;
   cursor: pointer;
-  background-color: #fff; 
-  border-bottom: 1px solid #d4d4d4; 
+  background-color: #444;
+  color: white; 
+  border-bottom: 1px solid #666; 
 }
 
 /*when hovering an item:*/
 .autocomplete-items div:hover {
-  background-color: #e9e9e9; 
+  background-color: #666; 
 }
 
 /*when navigating through the items using the arrow keys:*/
 .autocomplete-active {
-  background-color: DodgerBlue !important;
+  background-color: dodgerblue !important;
   color: #ffffff;
 }
 </style>
 </head>     
 <body>
-
-<h2>Movie Recommendation Engine</h2>
-
-<p>Start typing:</p>
-
-<!--Make sure the form has the autocomplete function switched off:-->
-<form autocomplete="off" action="/get_10_movies">
-  <div class="autocomplete" style="width:300px;">
-    <input id="myInput" type="text" name="movie" placeholder="Type a movie">
+<div class="layer">
+  
+  <div class = "content">
+    <h2>Search for a movie to get recommendations</h2>
+    <!--Make sure the form has the autocomplete function switched off:-->
+    <form autocomplete="off" action="/get_10_movies">
+      <div class="autocomplete" style="width:300px;">
+        <input id="myInput" type="text" name="movie" placeholder="Type here...">
+      </div>
+      <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+    </form>
   </div>
-  <input type="submit">
-</form>
 
+</div>
 
 
 <script>
