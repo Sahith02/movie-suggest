@@ -61,21 +61,21 @@ input[type=submit] {
 
 /*when navigating through the items using the arrow keys:*/
 .autocomplete-active {
-  background-color: DodgerBlue !important; 
-  color: #ffffff; 
+  background-color: DodgerBlue !important;
+  color: #ffffff;
 }
 </style>
 </head>     
 <body>
 
-<h2>Autocomplete</h2>
+<h2>Movie Recommendation Engine</h2>
 
 <p>Start typing:</p>
 
 <!--Make sure the form has the autocomplete function switched off:-->
 <form autocomplete="off" action="/get_10_movies">
   <div class="autocomplete" style="width:300px;">
-    <input id="myInput" type="text" name="movie" placeholder="Country">
+    <input id="myInput" type="text" name="movie" placeholder="Type a movie">
   </div>
   <input type="submit">
 </form>
