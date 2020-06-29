@@ -1,10 +1,11 @@
+from scripts.get_details_script import get_movie_details_from_index, get_movies, search_value
 import numpy as np
 import pandas as pd
 from flask import Flask, request, jsonify, render_template
 import pickle
 
 app = Flask(__name__)
-loadedModel = pickle.load(open('moviePickleFile', 'rb'))
+
 
 @app.route('/')
 def home():
@@ -15,47 +16,28 @@ def predict_10_post():
     '''
     For rendering results on HTML GUI
     '''
-    movie = request.values.get('movie')
+    movie_searched = request.values.get('movie')
+    return str(get_movies(movie=movie_searched))
 
-    df2 = pd.read_csv("40k_movies_df")
-    df2.drop(columns = "Unnamed: 0", inplace = True)
-
-    df2_feat = pd.read_csv("40k_movies_df_feat")
-    df2_feat.drop(columns = "Unnamed: 0", inplace = True)
-
-    loc = list(df2['Title']).index(movie)
-    list_recom_movies = list(loadedModel.kneighbors([df2_feat.iloc[loc]])[1])
-    c = 0
-    finalFetchedMovies = {}
-    for i in list_recom_movies[0]:
-        if (c>0):
-            finalFetchedMovies[c] = df2.at[int(i), 'Title']
-        c=c+1
-
-    return str(finalFetchedMovies)
-
-@app.route('/get_10_movies', methods=['GET'])
-def predict_10_get():
+@app.route('/get_n_movies', methods=['POST'])
+def predict_n_post():
     '''
     For rendering results on HTML GUI
     '''
-    movie = request.values.get('movie')
+    movie_searched = request.values.get('movie')
+    if('show' in request.values):
+        show_n = int(request.values.get('show'))
+    else:
+        show_n = 10
+    return str(get_movies(movie=movie_searched, show=show_n))
 
-    df2 = pd.read_csv("40k_movies_df")
-    df2.drop(columns = "Unnamed: 0", inplace = True)
+@app.route('/search_for_movie', methods=['POST'])
+def search_for_movie():
+    search = 'toy'
+    # search = request.values.get('search')
+    search = request.form['search']
+    return jsonify(search_value(search))
 
-    df2_feat = pd.read_csv("40k_movies_df_feat")
-    df2_feat.drop(columns = "Unnamed: 0", inplace = True)
 
-    loc = list(df2['Title']).index(movie)
-    list_recom_movies = list(loadedModel.kneighbors([df2_feat.iloc[loc]])[1])
-    c = 0
-    finalFetchedMovies = {}
-    for i in list_recom_movies[0]:
-        if (c>0):
-            finalFetchedMovies[c] = df2.at[int(i), 'Title']
-        c=c+1
-
-    return str(finalFetchedMovies)
 if __name__ == "__main__":
     app.run(debug=True)
