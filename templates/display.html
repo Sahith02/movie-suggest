@@ -44,16 +44,16 @@
         <p style="display: inline-block; color: red;">{{ movie['imdb_score'] }}</p>
         {% endif %}
         <br>
-        <div style="display: inline-block;">
+        <!-- <div style="display: inline-block;"> -->
           {% for genre in movie['genre'] %}
-          <p style="float: left; font-size: medium;">{{ genre }}</p>
+          <p style="display: inline-block; font-size: medium;">{{ genre }}</p>
           {% endfor %}
-        </div>
+        <!-- </div> -->
       </div>
       {% endfor %}
     </div>
 
-    <div class="tinder--buttons">
+    <div class="tinder--buttons" style="margin-bottom: 60px;">
       <button id="nope"><i class="fa fa-remove"></i></button>
       <button id="love"><i class="fa fa-heart"></i></button>
     </div>
