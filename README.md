@@ -7,4 +7,4 @@ Visit https://movie-suggest.herokuapp.com/ to see the website in action.
 - [x] Reduce load time by altering the dynamic search system structure.
 - [x] Modify the machine learning model to remove all duplicates in the JSON response.
 - [x] Add more details to the JSON response.
-- [ ] Make UI for the recommendation page as well.
+- [x] Make UI for the recommendation page as well.
