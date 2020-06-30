@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Movies for {{ movie_searched_for }}</title>
+  <link rel="shortcut icon" href="/static/favicon.ico" />
+
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script type="text/javascript" src="https://hammerjs.github.io/dist/hammer.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="static/display.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-92231900-2');
+  </script>
+</head>
+
+<body>
+  <div class = "layer">
+  
+  <div class="tinder">
+    <div class="tinder--status">
+      <i class="fa fa-remove"></i>
+      <i class="fa fa-heart"></i>
+    </div>
+
+    <div class="tinder--cards">
+      {% for movie in movies: %}
+      <div class="tinder--card" style="background-color: #ecf0f1;">
+        {% if movie['poster_link'] %}
+          <img src={{ movie['poster_link'] }} alt="Poster Not found :(">
+        {% endif %}
+        <h3>{{ movie['title'] }}</h3>
+        {% if movie['imdb_score'] %}
+          <p style="display: inline-block;">IMDB: </p>
+        {% endif %}
+        {% if movie['imdb_score'] and movie['imdb_score'] >= 6.5 %}
+        <p style="display: inline-block; color: green;">{{ movie['imdb_score'] }}</p>
+        {% elif movie['imdb_score'] and movie['imdb_score'] < 6.5 and movie['imdb_score'] > 4.5 %}
+        <p style="display: inline-block; color: goldenrod;">{{ movie['imdb_score'] }}</p>
+        {% elif movie['imdb_score'] != None %}
+        <p style="display: inline-block; color: red;">{{ movie['imdb_score'] }}</p>
+        {% endif %}
+        <br>
+        <div style="display: inline-block;">
+          {% for genre in movie['genre'] %}
+          <p style="float: left; font-size: medium;">{{ genre }}</p>
+          {% endfor %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="tinder--buttons">
+      <button id="nope"><i class="fa fa-remove"></i></button>
+      <button id="love"><i class="fa fa-heart"></i></button>
+    </div>
+  </div>
+
+  </div>
+
+  <script type="text/javascript" src="static/display.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+body {
+  background-image: url("background.jpg");
+  font: 16px Arial;
+  color: white;
+  width: 100%;
+  /* vertical-align: middle; */
+  text-align: center;
+}
+
+.layer {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+  /* background-color: #fff; */
+  max-width: 400px;
+  margin: auto;
+  margin-top: 240px;
+}

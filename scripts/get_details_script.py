@@ -27,7 +27,7 @@ def get_movie_details_from_index(index):
 def get_movies(movie, show = 10):
     index = np.where(df_clean['Title'] == movie)[0][0]
     recommends = loaded_model.kneighbors([df_clean_features[index]], return_distance = False, n_neighbors = show + 1)[0]
-    return str([get_movie_details_from_index(i) for i in recommends if index != i][:show])
+    return [get_movie_details_from_index(i) for i in recommends if index != i][:show]
 
 def search_value(search):
     search = search.lower()

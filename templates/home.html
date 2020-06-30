@@ -1,129 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
-<script type="text/javascript" src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <title>Movie Suggest</title>
+  <link rel="shortcut icon" href="/static/favicon.ico" />
 
-<style>
-* {
-  box-sizing: border-box;
-}
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+  <script type="text/javascript" src="https://requirejs.org/docs/release/2.3.5/minified/require.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="/static/home.css">
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-92231900-2"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-*:focus {
-  outline: none;
-}
+    gtag('config', 'UA-92231900-2');
+  </script>
 
 
-html {
-  /* display: table; */
-  /* margin: auto; */
-  /* background-color: #121212; */
-  /* position: absolute; */
-}
-
-body {
-  background-image: url("static/images/POSTER_movie_film_movies_posters_1920x1080.jpg");
-  font: 16px Arial;
-  width: 100%;
-  /* vertical-align: middle; */
-  text-align: center;
-}
-
-.layer {
-    background-color: rgba(0, 0, 0, 0.75);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-
-.content {
-  /* background-color: #fff; */
-  max-width: 400px;
-  margin: auto;
-  margin-top: 240px;
-}
-
-h2 {
-  color: #fff;
-  width: 400px;
-  font-size: 200%;
-  font-family: 'Roboto', sans-serif;
-  letter-spacing: 2px;
-}
-
-/*the container must be positioned relative:*/
-.autocomplete {
-  position: relative;
-  display: inline-block;
-}
-
-input {
-  border: 1px solid transparent;
-  background-color: #333333;
-  padding: 10px;
-  font-size: 16px;
-}
-
-input[type=text] {
-  background-color: #444;
-  color: #fff;
-  border-radius: 5px;
-  width: 100%;
-  /* border-color: red; */
-}
-
-input[type=submit] {
-  background-color: DodgerBlue;
-  color: #fff;
-  cursor: pointer;
-}
-
-button {
-  border: 1px solid transparent;
-  background-color: DodgerBlue;
-  padding: 10px 20px;
-  color: #fff;
-  cursor: pointer;
-  border-radius: 5px;
-  font-size: large;
-}
-
-.autocomplete-items {
-  position: absolute;
-  border: 1px solid #444;
-  border-bottom: none;
-  border-top: none;
-  z-index: 99;
-  /*position the autocomplete items to be the same width as the container:*/
-  top: 100%;
-  left: 0;
-  right: 0;
-}
-
-.autocomplete-items div {
-  padding: 10px;
-  cursor: pointer;
-  background-color: #444;
-  color: white; 
-  border-bottom: 1px solid #666; 
-}
-
-/*when hovering an item:*/
-.autocomplete-items div:hover {
-  background-color: #666; 
-}
-
-/*when navigating through the items using the arrow keys:*/
-.autocomplete-active {
-  background-color: dodgerblue !important;
-  color: #ffffff;
-}
-</style>
 </head>     
 <body>
 <div class="layer">
@@ -142,147 +39,7 @@ button {
 </div>
 
 
-<script>
-
-function autocomplete(inp, arr) {
-  /*the autocomplete function takes two arguments,
-  the text field element and an array of possible autocompleted values:*/
-  var currentFocus;
-
-  
-
-  /*execute a function when someone writes in the text field:*/
-  inp.addEventListener("input", function(e) {
-
-    var a, b, i, val = this.value;
-    var arr2 = [];
-
-    $.ajax({
-      type : "POST",
-      url : '/search_for_movie',
-      dataType: "json",
-      data: {"search": val},
-      // contentType: 'application/json;charset=UTF-8',
-      async: false,
-      success: function (data) {
-        // console.log(data.movies.toString());
-        arr2 = data.movies;
-      },
-      error: function(req, err){ console.log('my message' + err); }
-    });
-    // console.log(arr2.toString());
-
-
-      /*close any already open lists of autocompleted values*/
-      closeAllLists();
-      if (!val) { return false;}
-      currentFocus = -1;
-      /*create a DIV element that will contain the items (values):*/
-      a = document.createElement("DIV");
-      a.setAttribute("id", this.id + "autocomplete-list");
-      a.setAttribute("class", "autocomplete-items");
-      /*append the DIV element as a child of the autocomplete container:*/
-      this.parentNode.appendChild(a);
-      /*for each item in the array...*/
-      for (i = 0; i < arr2.length; i++) {
-        /*check if the item starts with the same letters as the text field value:*/
-        if (val.length >= 2 && arr2[i].toUpperCase().includes(val.toUpperCase())) {
-          /*create a DIV element for each matching element:*/
-          var index = arr2[i].toUpperCase().indexOf(val.toUpperCase());
-          b = document.createElement("DIV");
-          /*make the matching letters bold:*/
-          b.innerHTML = arr2[i].substr(0, index);
-          b.innerHTML += "<strong>" + arr2[i].substr(index, val.length) + "</strong>";
-          b.innerHTML += arr2[i].substr(index + val.length);
-          /*insert a input field that will hold the current array item's value:*/
-          b.innerHTML += "<input type='hidden' value='" + arr2[i] + "'>";
-          /*execute a function when someone clicks on the item value (DIV element):*/
-          b.addEventListener("click", function(e) {
-              /*insert the value for the autocomplete text field:*/
-              inp.value = this.getElementsByTagName("input")[0].value;
-              /*close the list of autocompleted values,
-              (or any other open lists of autocompleted values:*/
-              closeAllLists();
-          });
-          a.appendChild(b);
-        }
-      }
-  });
-  /*execute a function presses a key on the keyboard:*/
-  inp.addEventListener("keydown", function(e) {
-      var x = document.getElementById(this.id + "autocomplete-list");
-      if (x) x = x.getElementsByTagName("div");
-      if (e.keyCode == 40) {
-        /*If the arrow DOWN key is pressed,
-        increase the currentFocus variable:*/
-        currentFocus++;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 38) { //up
-        /*If the arrow UP key is pressed,
-        decrease the currentFocus variable:*/
-        currentFocus--;
-        /*and and make the current item more visible:*/
-        addActive(x);
-      } else if (e.keyCode == 13) {
-        /*If the ENTER key is pressed, prevent the form from being submitted,*/
-        e.preventDefault();
-        if (currentFocus > -1) {
-          /*and simulate a click on the "active" item:*/
-          if (x) x[currentFocus].click();
-        }
-      }
-  });
-  function addActive(x) {
-    /*a function to classify an item as "active":*/
-    if (!x) return false;
-    /*start by removing the "active" class on all items:*/
-    removeActive(x);
-    if (currentFocus >= x.length) currentFocus = 0;
-    if (currentFocus < 0) currentFocus = (x.length - 1);
-    /*add class "autocomplete-active":*/
-    x[currentFocus].classList.add("autocomplete-active");
-  }
-  function removeActive(x) {
-    /*a function to remove the "active" class from all autocomplete items:*/
-    for (var i = 0; i < x.length; i++) {
-      x[i].classList.remove("autocomplete-active");
-    }
-  }
-  function closeAllLists(elmnt) {
-    /*close all autocomplete lists in the document,
-    except the one passed as an argument:*/
-    var x = document.getElementsByClassName("autocomplete-items");
-    for (var i = 0; i < x.length; i++) {
-      if (elmnt != x[i] && elmnt != inp) {
-        x[i].parentNode.removeChild(x[i]);
-      }
-    }
-  }
-  /*execute a function when someone clicks in the document:*/
-  document.addEventListener("click", function (e) {
-      closeAllLists(e.target);
-  });
-}
-
-movies = []
-
-// $.ajax({
-// 	type : "POST",
-// 	url : '/search_for_movie',
-// 	dataType: "json",
-// 	data: "",
-// 	contentType: 'application/json;charset=UTF-8',
-// 	success: function (data) {
-// 		console.log(data.movies.toString());
-// 	},
-//   error: function(req, err){ console.log('my message' + err); }
-// 	});
-
-
-/*initiate the autocomplete function on the "myInput" element, and pass along the countries array as possible autocomplete values:*/
-autocomplete(document.getElementById("myInput"), movies);
-</script>
+<script src="{{url_for('static', filename='home.js')}}"></script>
 
 </body>
 </html>

@@ -1,0 +1,115 @@
+* {
+  box-sizing: border-box;
+}
+
+*:focus {
+  outline: none;
+}
+
+
+html {
+  /* display: table; */
+  /* margin: auto; */
+  /* background-color: #121212; */
+  /* position: absolute; */
+}
+
+body {
+  background-image: url("background.jpg");
+  font: 16px Arial;
+  width: 100%;
+  /* vertical-align: middle; */
+  text-align: center;
+}
+
+.layer {
+    background-color: rgba(0, 0, 0, 0.75);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.content {
+  /* background-color: #fff; */
+  max-width: 400px;
+  margin: auto;
+  margin-top: 240px;
+}
+
+h2 {
+  color: #fff;
+  width: 400px;
+  font-size: 200%;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 2px;
+}
+
+/*the container must be positioned relative:*/
+.autocomplete {
+  position: relative;
+  display: inline-block;
+}
+
+input {
+  border: 1px solid transparent;
+  background-color: #333333;
+  padding: 10px;
+  font-size: 16px;
+}
+
+input[type=text] {
+  background-color: #444;
+  color: #fff;
+  border-radius: 5px;
+  width: 100%;
+  /* border-color: red; */
+}
+
+input[type=submit] {
+  background-color: DodgerBlue;
+  color: #fff;
+  cursor: pointer;
+}
+
+button {
+  border: 1px solid transparent;
+  background-color: DodgerBlue;
+  padding: 10px 20px;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: large;
+}
+
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid #444;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: #444;
+  color: white; 
+  border-bottom: 1px solid #666; 
+}
+
+/*when hovering an item:*/
+.autocomplete-items div:hover {
+  background-color: #666; 
+}
+
+/*when navigating through the items using the arrow keys:*/
+.autocomplete-active {
+  background-color: dodgerblue !important;
+  color: #ffffff;
+}

@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 from flask import Flask, request, jsonify, render_template
 import pickle
+# import json
 
 app = Flask(__name__)
 
@@ -28,15 +29,23 @@ def predict_n_post():
     if('show' in request.values):
         show_n = int(request.values.get('show'))
     else:
-        show_n = 10
-    return str(get_movies(movie=movie_searched, show=show_n))
+        show_n = 25
+    try:
+        movies_recommended = get_movies(movie=movie_searched, show=show_n) + [{'imdb_id': 0, 'title': "That's all for now folks!", 'imdb_score': None, 'genre': [], 'poster_link': '', 'year': ''}]
+        # return str(get_movies(movie=movie_searched, show=show_n))
+        return render_template('display.html', movies = movies_recommended, movie_searched_for = movie_searched)
+    except:
+        return render_template('error.html')
 
 @app.route('/search_for_movie', methods=['POST'])
 def search_for_movie():
-    search = 'toy'
     # search = request.values.get('search')
     search = request.form['search']
     return jsonify(search_value(search))
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('error.html'), 500
 
 
 if __name__ == "__main__":
