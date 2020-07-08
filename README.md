@@ -1,6 +1,6 @@
 # Movie-Suggest
 
-This is a movie recommendation engine made in python with a KNN model trained on 40k movies and 28 genres. The machine learning model was then made into an API with Flask and deployed onto Heroku. The website is now live with the home page working.
+This is a movie recommendation engine made in python with a KNN model trained on 40k movies and 28 genres. The machine learning model was then made into an API with Flask and deployed onto Heroku. The website is now live with everything working.
 
 Visit https://movie-suggest.herokuapp.com/ to see the website in action.
 
